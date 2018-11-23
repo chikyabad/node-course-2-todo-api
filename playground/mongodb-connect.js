@@ -1,3 +1,4 @@
+// Start local MongoDB C:\Users\chicoc01\MongoDB\bin>mongod.exe --dbpath C:\Users\chicoc01\mongo-data
 // const MongoClient = require('mongodb').MongoClient;
 const {MongoClient, ObjectID} = require('mongodb'); // Discratctors
 
