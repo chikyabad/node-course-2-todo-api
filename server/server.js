@@ -9,6 +9,7 @@ var app = express();
 
 app.use(bodyParser.json());
 
+// Create Todos
 app.post('/todos', (req, res) => {
 
   var todo = new Todo({
@@ -23,6 +24,9 @@ app.post('/todos', (req, res) => {
 
 });
 
+// App Listner
 app.listen(3000, () => {
   console.log('Started on port 3000');
 });
+
+module.exports = {app};
