@@ -17,8 +17,10 @@ app.post('/todos', (req, res) => {
     text: req.body.text
   });
 
+  // var todo = new Todo(req.body);
+
   todo.save().then((doc) => {
-    res.status(201).send(doc);
+    res.status(200).send(doc);
   }, (e) => {
     res.status(400).send(e);
   });
@@ -45,14 +47,48 @@ app.get('/todos/:id', (req, res) => {
 
   Todo.findById(id).then((todo) => {
     if(todo){
-      res.send({todo}); // Found
+      res.send({todo}); // Todo Found
     }else {
-      res.status(404).send(); // Not Found
+      res.status(404).send(); // Todo Not Found
     }
-  }, (e) => {
-    res.status(400).send(); // Other errors
-  });
+  }).catch((e) => res.status(400).send()); // Other errors
 
+});
+
+// Delete Todos by ID
+app.delete('/todos/:id', (req, res) => {
+  var id = req.params.id;
+  if (!ObjectID.isValid(id)){
+    res.status(404).send(); // Id invalid
+  }
+  Todo.findByIdAndRemove(id).
+  then((todo) => {
+      if(todo){
+        res.send({todo}); // Todo Found
+      }else {
+        res.status(404).send(); // Todo Not Found
+      }
+    }).catch((e) => res.status(400).send()); // Other errors
+});
+
+// Update Todos by ID
+app.put('/todos/:id', (req, res) => {
+  var id = req.params.id;
+  if (!ObjectID.isValid(id)){
+    res.status(404).send(); // Id invalid
+  }
+  Todo.findByIdAndUpdate(
+    id,
+    {$set: req.body},
+    {
+      new: true
+    }).then((todo) => {
+      if(todo){
+        res.send({todo}); // Todo Found
+      }else {
+        res.status(404).send(); // Todo Not Found
+      }
+    }).catch((e) => res.status(400).send()); // Other errors
 });
 
 
