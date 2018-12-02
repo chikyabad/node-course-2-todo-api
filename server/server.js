@@ -102,7 +102,7 @@ app.patch('/todos/:id', (req, res) => {
     res.status(404).send(); // Id invalid
   }
 
-  if (_.isBoleean(body.completed) && body.completed){ // Boleean and True
+  if (_.isBoolean(body.completed) && body.completed){ // Boolean and True
     body.completedAt = new Date().getTime();
   } else {
     body.completed = false;
